@@ -1,0 +1,123 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int icntM = 3;
+int icntC = 3;
+int fcntM = 0;
+int fcntC = 0;
+
+int side = 0;
+int flag = 0;
+int select = 0;
+int check()
+{
+    if(fcntM==3&&fcntC==3)
+        return 0;
+
+    else
+        return 1;
+}
+void Print(char passenger1, char passenger2)
+{
+
+    cout<<"\n";
+    for (int i = 0; i < fcntM; i++)
+        cout << " M ";
+    for (int i = 0; i < fcntC; i++)
+        cout << " C ";
+
+    if (side==0)
+        cout << "     ~~~~~WATER~~~~~<B0(" << passenger1 << "," << passenger2 << ")AT>  ";
+    else
+        cout << "     <BO(" << passenger1 << "," << passenger2 << ")AT>~~~~~WATER~~~~~  ";
+    for (int i = 0; i < icntM; i++)
+        cout << " M ";
+    for (int i = 0; i < icntC; i++)
+        cout << " C ";
+}
+int main()
+{
+    Print(' ',' ');
+    while(check())
+    {
+        if(side==0)
+        {
+            switch(select)
+            {
+            case 1 :Print('C',' ');
+                    icntC++;
+                    break;
+            case 2 :Print('C','M');
+                    icntC++;
+                    icntM++;
+                    break;
+            }
+
+            if(((icntM-2)>=icntC&&(fcntM+2)>=fcntC)||(icntM-2)==0)
+               {
+                   icntM = icntM-2;
+                   select = 1;
+                   Print('M','M');
+                   side = 1;
+               }
+            else if((icntC-2)<icntM&&(fcntC+2<=fcntM||fcntM==0)||icntM==0)
+                {
+                   icntC = icntC-2;
+                   select = 2;
+                   Print('C','C');
+                   side = 1;
+
+                }
+            else if((icntC-1)<=(icntM-1)&&(fcntC+1)<=(fcntM+1))
+                {
+                   icntC = icntC-1;
+                   icntM = icntM-1;
+                   select = 3;
+                   Print('M','C');
+                   side = 1;
+                }
+        }
+
+        else
+        {
+            switch (select)
+            {
+                case 1: Print('M', 'M');
+                        fcntM = fcntM + 2;
+                        break;
+
+                case 2: Print('C', 'C');
+                        fcntC = fcntC + 2;
+                        break;
+
+                case 3: Print('M', 'C');
+                        fcntC = fcntC+ 1;
+                        fcntM = fcntM + 1;
+                        break;
+            }
+
+            if (check())
+            {
+                if (((fcntC>1&&fcntM==0)||icntM==0))
+                {
+                    fcntC = fcntC-1;
+                    select = 1;
+                    Print('C', ' ');
+                    side = 0;
+                }
+
+                else if ((icntC+2)>icntM)
+                {
+                    fcntC = fcntC-1;
+                    fcntM = fcntM-1;
+                    select = 2;
+                    Print('C', 'M');
+                    side = 0;
+                }
+            }
+        }
+    }
+    Print(' ',' ');
+    return 0;
+}

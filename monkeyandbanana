@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define f first
+#define s second
+int state = 0;
+int main()
+{
+cout<<"****The Monkey Problem is****\n"<<endl;
+
+//
+if(state==0)
+cout<<"Go(Door,Corner of Room)\n";
+state = 1;
+
+if(state==1)
+cout<<"Push(Box,Corner of Room, Center of Room,Height=Low)\n";
+state = 2;
+
+if(state==1)
+cout<<"Push(Box,Corner of Room, Center of Room,Height=Low)\n";
+state = 2;
+
+if(state==2)
+cout<<"ClimbUp(Box,Center of Room)\n";
+state = 3;
+
+if(state==3)
+cout<<"Grasp(Banana,Center of Room,Height=High)\n";
+state = 4;
+
+if(state==4)
+cout<<"ClimbDown(Box)\n";
+state = 5;
+
+if(state==5)
+cout<<"Push(Box,Center of Room, Corner of Room,Height=Low)\n";
+
+
+return 0;
+}

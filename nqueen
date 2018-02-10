@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+#define N 4
+int nqueen[4][4] = { {0,0,0,0},
+                    {0,0,0,0},
+                    {0,0,0,0},
+                    {0,0,0,0}
+};
+
+bool issafe(int row, int col)
+{
+    for(int i=0;i<col;i++)
+        if(nqueen[row][i])
+            return false;
+
+    for(int i=row,j=col;i>=0&&j>=0;i--,j--)
+        if(nqueen[i][j])
+            return false;
+
+    for(int i=row,j=col;i<N&&j>=0;i++,j--)
+        if(nqueen[i][j])
+            return false;
+
+    return true;
+
+}
+bool foo(int col)
+{
+    if(col>=N)
+        return true;
+
+    for(int i=0;i<N;i++)
+    {
+        if(issafe(i,col))
+        {
+            nqueen[i][col]=1;
+            if(foo(col+1))
+                return true;
+
+            nqueen[i][col]=0;
+        }
+    }
+
+    return false;
+}
+int main()
+{
+    if(foo(0)==false)
+    {
+        cout<<"Solution doesn't exists\n";
+    }
+
+    else
+    {
+        for(int i=0;i<N;i++)
+        {
+            for(int j=0;j<N;j++)
+            {
+                cout<<nqueen[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+    }
+    return 0;
+}

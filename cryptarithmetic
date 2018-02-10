@@ -1,0 +1,153 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+string str1,str2,str3;
+vector<int>visi(10);
+struct node
+{
+    char c;
+    int v;
+};
+
+bool check(node *arr,int cnt)
+{
+    int sum1 = 0;
+    int sum2 = 0;
+    int sum3 = 0;
+    int m=1;
+    int j;
+    for(int i=0;i<str1.length();i++)
+    {
+        char ch=str1[i];
+        for( j=0; j<cnt; j++){
+            if(arr[j].c==ch){
+            break;
+            }
+        }
+
+    sum1+=sum1*10+arr[j].v;
+
+    }
+
+    for(int i=0;i<str2.length();i++)
+    {
+        char ch=str2[i];
+        for( j=0; j<cnt; j++){
+            if(arr[j].c==ch){
+            break;
+            }
+        }
+
+    sum2+=sum2*10+arr[j].v;
+
+    }
+
+    for(int i=0;i<str3.length();i++)
+    {
+        char ch=str3[i];
+        for( j=0; j<cnt; j++){
+            if(arr[j].c==ch){
+            break;
+            }
+        }
+
+    sum3+=sum3*10+arr[j].v;
+
+    }
+
+    if(sum3==sum1+sum2)
+        return true;
+
+    else
+        return false;
+}
+void perm(const int cnt, node *arr, int n)
+{
+    if(n==cnt-1)
+    {
+        for(int i=0;i<10;i++)
+        {
+            if(visi[i]==0)
+            {
+                arr[n].v = i;
+                if(check(arr,cnt))
+                {
+                cout<<"Solution Found\n";
+
+                for(int j=0;j<cnt;j++)
+                {
+                    cout<<" "<<arr[j].c<<" "<<arr[j].v;
+                }
+                cout<<endl;
+                }
+
+            }
+
+        }
+        return;
+
+    }
+
+    for(int i=0;i<10;i++)
+    {
+        if(visi[i]==0)
+        {
+            arr[n].v=i;
+            visi[i]=1;
+            perm(cnt,arr,n+1);
+            visi[i]=0;
+        }
+    }
+}
+int main()
+{
+
+    cin>>str1;
+
+    cin>>str2;
+
+    cin>>str3;
+
+    int l1,l2,l3;
+    l1=str1.length();
+    l2=str2.length();
+    l3=str3.length();
+
+    vector<int> a(26);
+    for(int i=0;i<l1;i++)
+        a[str1[i]-'a']++;
+
+    for(int i=0;i<l2;i++)
+        a[str2[i]-'a']++;
+
+    for(int i=0;i<l3;i++)
+        a[str3[i]-'a']++;
+
+    int cnt = 0;
+    for(int i=0;i<26;i++)
+    {
+        if(a[i]>0)
+            cnt++;
+    }
+
+    if(cnt>10)
+    {
+        cout<<"Invalid\n";
+        return 0;
+    }
+    node *b;
+    b = (node*)malloc(cnt*sizeof(node));
+
+    for(int i=0,j=0;i<26;i++)
+    {
+        if(a[i]>0)
+        {
+            b[j].c = char(i+'a');
+            j++;
+        }
+    }
+
+    perm(cnt,b,0);
+
+    return 0;
+}

@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+int num;
+int d;
+int arr[1000][1000];
+int visi[1000];
+int cost = 0;
+
+int findleast(int c)
+{
+    int i;
+    int nc=999;
+    int mini=999;
+    int kmin;
+
+    for(i=0;i<num;i++)
+    {
+        if((arr[c][i]!=0)&&(visi[i]==0))
+            if(arr[c][i]+arr[i][c] < mini)
+            {
+                mini=arr[i][0]+arr[c][i];
+                kmin=arr[c][i];
+                nc=i;
+            }
+    }
+
+    if(mini!=999)
+        cost+=kmin;
+
+    return nc;
+}
+void findmincost(int s)
+{
+    int i;
+    int nextcity;
+
+    visi[s]=1;
+    cout<<s+1<<" -> ";
+
+    nextcity=findleast(s);
+
+    if(nextcity==999)
+    {
+        nextcity=0;
+        cout<<nextcity+1<<endl;
+        cost+=arr[s][nextcity];
+        return;
+    }
+
+    findmincost(nextcity);
+}
+int main()
+{
+    cout<<"Enter the number of cities you want: ";
+    cin>>num;
+
+    cout<<"\n";
+    cout<<"Enter the Distances Between Cities:\n";
+
+    for(int i=0; i<num-1; i++)
+    {
+        for(int j=i+1; j<num; j++)
+        {
+            cout<<"From city "<<i+1<<" To city "<<j+1<<" : ";
+            cin>>arr[i][j];
+            arr[j][i]=arr[i][j];
+        }
+    }
+
+    memset(visi,0,sizeof(visi));
+
+    findmincost(0);
+    cout<<"Minimum cost of Travelling Salesman Problem is "<<cost<<endl;
+    return 0;
+}
+
